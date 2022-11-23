@@ -73,6 +73,7 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     'home',
     'users.apps.UsersConfig',
+    'documents.apps.DocumentsConfig',
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -87,6 +88,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'drf_yasg',
     'storages',
+    'corsheaders',
 ]
 MODULES_APPS = get_modules()
 
@@ -96,6 +98,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -165,7 +168,7 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -213,11 +216,22 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 # Custom user model
 AUTH_USER_MODEL = "users.User"
 
-EMAIL_HOST = env.str("EMAIL_HOST", "smtp.sendgrid.net")
-EMAIL_HOST_USER = env.str("SENDGRID_USERNAME", "")
-EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = env.str("SENDGRID_USERNAME", "apikey")
+EMAIL_HOST_PASSWORD = env.str("SENDGRID_API_KEY", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = env.str('DEFAULT_FROM_EMAIL', 'charles.apochi@crowdbotics.com')
+
+
+# docusign settings
+DOCUSIGN_USER_ID = env.str('DOCUSIGN_USER_ID', '')
+DOCUSIGN_ACCOUNT_ID = env.str('DOCUSIGN_ACCOUNT_ID', '')
+DOCUSIGN_INTEGRATION_KEY = env.str('DOCUSIGN_INTEGRATION_KEY', '')
+DOCUSIGN_ACCOUNT_BASE_URL = env.str('DOCUSIGN_ACCOUNT_BASE_URL', 'https://account-d.docusign.com')
+DOCUSIGN_BASE_URL = env.str('DOCUSIGN_BASE_URL', 'https://demo.docusign.net')
+DOCUSIGN_ACCOUNT_HOST_NAME = env.str('DOCUSIGN_ACCOUNT_HOST_NAME', 'account-d.docusign.com')
 
 
 # AWS S3 config
@@ -273,3 +287,6 @@ if GS_BUCKET_NAME:
     DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     STATICFILES_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
     GS_DEFAULT_ACL = "publicRead"
+
+# cors headers
+CORS_ALLOW_ALL_ORIGINS = True

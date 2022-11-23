@@ -23,12 +23,14 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 urlpatterns = [
-    path("", include("home.urls")),
+    # path("", include("home.urls")),
+    path('accounts/api/v1/', include('users.api.v1.account_urls')),
     path("accounts/", include("allauth.urls")),
     path("modules/", include("modules.urls")),
     path("api/v1/", include("home.api.v1.urls")),
     path("admin/", admin.site.urls),
     path("users/", include("users.urls", namespace="users")),
+    path('documents/', include('documents.urls', namespace='documents')),
     path("rest-auth/", include("rest_auth.urls")),
     # Override email confirm to use allauth's HTML view instead of rest_auth's API view
     path("rest-auth/registration/account-confirm-email/<str:key>/", confirm_email),

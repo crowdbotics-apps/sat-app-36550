@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>You have a new request to sign in a Document from: {{ instance.user.get_full_name }}</p>
+<p><a href="{{ sign_url }}" style="background-color: #000; color: #fff; padding: 5px 10px; font-size: 18px;
+font-weight: 600;">Click to sign</a></p>
+<p>If the button is not working then copy the link and browse directly from your browser. <br/>
+Link: {{ sign_url }}
+</p>
+</body>
+</html>
